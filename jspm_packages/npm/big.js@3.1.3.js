@@ -1,0 +1,1 @@
+module.exports = require("npm:big.js@3.1.3/big");

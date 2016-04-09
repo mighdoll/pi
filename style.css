@@ -1,0 +1,29 @@
+body {
+    margin-left: 10px;
+}
+.title {
+    margin-left: 20px;
+}
+.intro {
+    margin-bottom: 10px;
+    width: 90%;
+}
+.inline-block {
+    display: inline-block;
+}
+.section {
+    margin-top: 50px;
+}
+.section-body {
+    margin-left: 40px;
+    display: none;
+}
+#pi-ratio {
+    margin-left: 30px;
+}
+.math-example {
+    margin-left: 15px
+}
+#underline td {
+  border-bottom:black dotted 1px;
+}

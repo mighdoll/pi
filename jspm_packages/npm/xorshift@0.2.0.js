@@ -1,0 +1,1 @@
+module.exports = require("npm:xorshift@0.2.0/xorshift.js");

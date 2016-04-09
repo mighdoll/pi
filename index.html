@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<head>
+    <script src="jspm_packages/system.js"></script>
+    <script src="config.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="bower_components/MathJax/MathJax.js?config=AM_CHTML"></script>
+</head>
+
+<body>
+
+    <h2 class="title">Calculating Pi</h2>
+    <div class="intro">
+
+        <p>
+            &pi; is the ratio between the circumference and the diameter of a circle on a flat plane.
+        </p>
+        <svg id="pi-ratio" height=205 width=205>
+            <g transform="translate(2,2)">
+                <circle cx=100 cy=100 r=100 stroke="green" stroke-width="2px" fill="none" />
+                <path d="m0,100 l200,0 Z" / stroke="purple" stroke-width='2px' />
+            </g>
+        </svg>
+        <span style="margin-left:20px"> `pi = "circumference" / "diameter" ` </span>
+        <p>
+            The ratio is the same for any size circle. Try measuring &pi; yourself on plates and bowls and bicycle wheels!
+        </p>
+        <p>
+            The value of &pi; is about 3.14 which is about 22 &divide; 7. But &pi; is an irrational number. It can't be written accurately as a fraction of whole numbers. The digits of &pi; can never be written down completely - it would require an infinite number
+            of digits. Writing all those digits would take forever, and besides, no one knows what all the digits are!
+        </p>
+        <p>
+            Even though mathematicians have known about &pi; for thousands of years, new ways to calculate &pi; are still being discovered. Below are a few famous ways mathematicians have discovered to calculate more and more of &pi;.
+        </p>
+    </div>
+
+    <div class="section">
+        <div>
+            <button id="random-show" class="section-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                Random
+            </button> Estimate &pi; by the counting the random points inside an inscribed circle.
+        </div>
+        <div id="random-card" class="section-body">
+            <div>
+                <div class="mdl-textfield mdl-js-textfield">
+                    <input id='random-points' class="mdl-textfield__input" type="number" value=5>add this many random points </input>
+                </div>
+                <button id='random-go' class="section-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    Add</button>
+                </button>
+            </div>
+            <div>
+                <div class="inline-block">
+                    <svg width=420 height=420>
+                        <g id="random-simulation" transform="translate(5,5)">
+                            <circle cx=200 cy=200 r=200 fill="lightgreen" stroke="green" />
+                            <!-- <path d="M400,400 L0,400 L0,0 M0,0 A400,400 0 0 1 400 400"
+                                fill="lightgreen" stroke="green"/> -->
+                            <rect x=0 y=0 width=400 height=400 fill="grey" opacity=".5" />
+                            <rect x=0 y=0 width=400 height=400 fill="none" stroke="black" stroke-width=2 />
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="inline-block">
+                    <div style="width:400px">
+                        <p>
+                            The proportion of random points in the circle should be proportional to the area of the circle compared to the area of the square. i.e.:
+                        </p>
+                        <div class="math-example">
+                            <p> `"points in circle" / "total points" = &pi; / 4` </p>
+                            <p> `&pi; = 4* "points in circle" / "total points"` </p>
+                        </div>
+                    </div>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td> points in circle: </td>
+                                <td> <span id='random-in-circle' /> </td>
+                            </tr>
+                            <tr>
+                                <td> total points: </td>
+                                <td> <span id='random-total' /> </td>
+                            </tr>
+                            <tr>
+                                <td> estimated &pi;: </td>
+                                <td> <span id='random-estimate' /> </td>
+                            </tr>
+                            <tr>
+                                <td> accuracy: </td>
+                                <td> <span id='random-accuracy' /> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div>
+            <button id="nilakantha" class="section-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                Nilakantha
+            </button>
+            Estimate &pi; with an infinite series discovered in the 15th century.
+        </div>
+
+        <div id="nilakantha-card" class="section-body">
+            </br>
+            <p> The Indian mathematician Nilakantha Somayaji reported this infinite series. It converges to &pi;: </p>
+            <div class="math-example">
+                <p> `&pi; = 3 + 4 / ((3^3 - 3)) - 4 / ((5^3 - 5)) + 4 / ((7^3 - 7)) - 4 / ((9^3-9)) + ... ` </p>
+            </div>
+            <p> which is equivalent to the following (can you see why?): </p>
+            <div class="math-example">
+                <p> `&pi; = 3 + 4 / ((2 * 3 * 4)) - 4 / ((4 * 5 * 6)) + 4 / ((6 * 7 * 8)) - 4 / ((8 * 9 * 10)) + ... ` </p>
+            </div>
+            <p> Each term in the series is smaller than the last. As we add more and more terms together, the sum gets closer and closer to &pi;. </p>
+            <br/>
+            <div>
+                <div class="mdl-textfield mdl-js-textfield">
+                    <input id='nilakantha-terms' class="mdl-textfield__input" type="number" value=1>add more terms</input>
+                </div>
+                <button id='nilakantha-go' class="section-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    Add</button>
+                </button>
+            </div>
+            <table>
+                <tbody>
+                    <tr>
+                        <td> total terms </td>
+                        <td> <span id='nilakantha-total-terms' /> </td>
+                    </tr>
+                    <tr>
+                        <td> estimated &pi;: </td>
+                        <td> <span id='nilakantha-estimate' /> </td>
+                    </tr>
+                    <tr>
+                        <td> accuracy: </td>
+                        <td> <span id='nilakantha-accuracy' /> </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="archimedes" class="section">
+        <div>
+            <button class="section-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                Archimedes
+            </button>
+            Estimate &pi; as the perimeter of a many-sided polygon.
+        </div>
+
+        <div class="card section-body">
+            archimedes, bla bla bla
+        </div>
+
+        <div>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <svg width="450" height="400">
+                                <use xlink:href="archimedes-pi2.svg#archimedes"></use>
+                            </svg>
+                        </td>
+                        <td>
+                            <table id="underline">
+                                <tbody>
+                                    <tr>
+                                        <td> `n` </td> <td>   length of side in the new polygon </td>
+                                    </tr>
+                                    <tr>
+                                        <td> `s` </td> <td>  length of side in the old polygon </td>
+                                    </tr>
+                                    <tr>
+                                        <td> `r` </td> <td>  radius of the circle </td>
+                                    </tr>
+                                    <tr>
+                                        <td> `c = s/2` </td> <td>  half the side, by construction </td>
+                                    </tr>
+                                    <tr>
+                                        <td> `r^2 = a^2 + c^2` </td> <td>  pythagorean theorem </td>
+                                    </tr>
+                                    <tr>
+                                        <td> `a = sqrt(r^2 - c^2)` </td> <td>  &nbsp; solving for a </td>
+                                    </tr>
+                                    <tr>
+                                        <td> `r = a + b` </td> <td>  a and b combine to make r </td>
+                                    </tr>
+                                    <tr>
+                                        <td> `b = r - a` </td> <td>  &nbsp; solving for b </td>
+                                    </tr>
+                                    <tr>
+                                        <td> `n^2 = b^2 + c^2` </td> <td>  pythagorean theorem </td>
+                                    </tr>
+                                    <tr>
+                                        <td> `n = sqrt(b^2 + c^2)` </td> <td>  &nbsp; solving for n </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div>
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="add-terms mdl-textfield__input" type="number" value=1>double the number of polygon sides this many times</input>
+            </div>
+            <button class="go mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                New Polygon</button>
+            </button>
+            <button class="reset mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                Reset</button>
+            </button>
+        </div>
+
+        <table>
+            <tbody>
+                <tr>
+                    <td> terms: </td>
+                    <td> <span class='terms' /> </td>
+                </tr>
+                <tr>
+                    <td> polygon sides: </td>
+                    <td> <span class='polygon-sides' /> </td>
+                </tr>
+                <tr>
+                    <td> estimated &pi;: </td>
+                    <td> <span class='estimate' /> </td>
+                </tr>
+                <tr>
+                    <td> accuracy: </td>
+                    <td> <span class='accuracy' /> </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <script>
+        System.import('main.js');
+    </script>
+
+</body <html>
