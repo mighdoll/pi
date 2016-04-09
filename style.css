@@ -1,12 +1,15 @@
 body {
     margin-left: 10px;
+    text-align: center;
+    width:100%;
 }
 .title {
     margin-left: 20px;
 }
 .intro {
     margin-bottom: 10px;
-    width: 90%;
+    width: 80%;
+    padding-left: 10%;
 }
 .inline-block {
     display: inline-block;
@@ -26,4 +29,16 @@ body {
 }
 #underline td {
   border-bottom:black dotted 1px;
+}
+td {
+  text-align: left;
+}
+#table1 {
+  margin-left: calc(50% - 443px);
+}
+#table2 {
+  margin-left: calc(50% - 387px);
+}
+#table3 {
+  margin-left: calc(50% - 449px);
 }
