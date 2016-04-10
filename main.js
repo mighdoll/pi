@@ -210,12 +210,14 @@ function accuracyText(estimatedPi) {
     return text;
 }
 
+/** setup a demo based on archimedes technique for calculating pi */
 function archimedes(div) {
     var radius = Big(1),
         terms,
         numSides,
         side,
         estimatedPi,
+        demoPoly = demoPolygon(div.select('.demo-polygon')),
         addTerms = div.select('input.add-terms');
 
     setup();
@@ -234,10 +236,11 @@ function archimedes(div) {
         var toggleDisplay = showHide(div.select(".section-body"), clear);
         div.select('.section-button').on('click', toggleDisplay);
         div.select('button.reset').on('click', clear);
-        div.select('button.go').on('click', showNextPolygon);
-        inputAction(addTerms, showNextPolygon);
+        div.select('button.go').on('click', showNewPolygon);
+        inputAction(addTerms, showNewPolygon);
     }
 
+    /** calculate pi based on the next doubling in size of the polygon */
     function nextPolygon() {
         var halfSide = side.div(2),
             halfSideSquared = halfSide.times(halfSide),
@@ -250,7 +253,8 @@ function archimedes(div) {
         terms++;
     }
 
-    function showNextPolygon() {
+    /** double polygon sides one or more times, and show the resulting polygon */
+    function showNewPolygon() {
         var add = addTerms.node().value || 1;
 
         while (add--) {
@@ -268,6 +272,7 @@ function archimedes(div) {
     }
 
     function updateScreen() {
+        demoPoly.redraw(parseFloat(numSides));
         var accurate = accuracyText(estimatedPi);
         div.select('.terms').text(terms);
         div.select('.polygon-sides').text(numSides);
@@ -275,12 +280,67 @@ function archimedes(div) {
         div.select('.accuracy').text(accurate);
     }
 
-    function diagram() {
-        var svg = div.select("g.diagram");
-        svg.append('circle')
-            .attr('cx', 200)
-            .attr('cy', 200);
+    /** setup demo inscribed polygon, return redraw function */
+    function demoPolygon(svg) {
+        var size = [410,410],
+            center = [size[0]/2, size[1]/2],
+            radius = 200,
+            rotation = 0;
+
+        svg 
+            .attr('width', size[0])
+            .attr('height', size[1])
+            .append('circle')
+               .classed('point', true)
+               .attr("cx", center[0])
+               .attr("cy", center[1])
+               .attr("r", radius)
+               .attr("fill", "none")
+               .attr("stroke", "black")
+               .attr("stroke-width", .5);
+
+        /** redware the inscribed polygon with appropriate number of sides */
+        function redraw(sides) {
+            if (sides > 196) {
+                sides = 196;    
+            }
+
+            var vertices = polygon(center, radius, sides, rotation);
+            var pairs = vertices.map(function(v) {return v[0] + "," + v[1]; });
+            var points = pairs.reduce(function(a,b) { return a + " " + b; });
+
+            svg.select('.demo-polygon').remove();
+
+            svg 
+                .append('polygon')
+                .attr('points', points)
+                .attr("fill", "none")
+                .attr("stroke", "#993300")
+                .attr("stroke-width", 1.5)
+                .classed('demo-polygon', true);
+        }
+
+        return {
+            redraw: redraw
+        };
     }
+}
+
+
+/** return the vertices of a regular polygon */
+function polygon(center, radius, sides, rotation) {
+    var angle = 0 + rotation || 0,
+        angleDelta = (Math.PI * 2) / sides,
+        vertices = [];
+        
+    for (var i = 0; i < sides; i ++) {
+       var x = center[0] + radius * Math.cos(angle),
+           y = center[1] + radius * Math.sin(angle);
+       vertices.push([x,y]);
+       angle = angle + angleDelta; 
+    }
+
+    return vertices;
 }
 
 /** trigger a function when the user presses return on an input field */
